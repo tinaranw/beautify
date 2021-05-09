@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1064618942514",
+    "project_id": "beautify-2021",
+    "storage_bucket": "beautify-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064618942514:android:fc56e65f53225a422c9c2b",
+        "android_client_info": {
+          "package_name": "com.example.beautify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064618942514-m2icjfsvn2qr4ntftdfgo7aq3p68c7v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwq3yvNZtsZRODr6IRyIENrVWimt81Bjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064618942514-m2icjfsvn2qr4ntftdfgo7aq3p68c7v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@ class MyTheme {
   static ThemeData lightTheme() {
     return ThemeData(
       primarySwatch: Colors.redAccent[300],
-      backgroundColor: Color(0xFFf2f2f2),
+      backgroundColor: Color(0xFFf19b8e),
       primaryColor:Color(0xFFff9382),
       accentColor: Color(0xFF63ccd0),
       visualDensity: VisualDensity.adaptivePlatformDensity,

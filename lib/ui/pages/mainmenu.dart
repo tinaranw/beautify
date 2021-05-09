@@ -7,167 +7,49 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-  String date = DateFormat.yMMMd().format(DateTime.now());
+  int _selectedIndex = 0;
+
+  static List<Widget> _widgetOptions = <Widget>[
+    Dashboard(),
+    Collections(),
+    Wishlist(),
+    Profile()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Dashboard"),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      resizeToAvoidBottomInset: false,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.all(24),
-        child: Stack(
-          children: [
-            ListView(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        '' + date + '',
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Color(0xFF636263),
-                            fontFamily: 'SF'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'Welcome, Tinara Nathania',
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: Color(0xFF8ad5aa),
-                            fontFamily: 'Nexa'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      height: 150,
-                      child: Card(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text("Balance",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        )),
-                                  ),
-                                  Expanded(
-                                    child: Text("\$450.50",
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        )),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Divider(color: Colors.black),
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: IconButton(
-                                    onPressed: () => {},
-                                    icon: Icon(Icons.add),
-                                  )),
-                                  Expanded(
-                                      child: IconButton(
-                                    onPressed: () => {},
-                                    icon: Icon(Icons.call_made),
-                                  )),
-                                  Expanded(
-                                      child: IconButton(
-                                    onPressed: () => {},
-                                    icon: Icon(Icons.list),
-                                  )),
-                                  Expanded(
-                                      child: IconButton(
-                                    onPressed: () => {},
-                                    icon: Icon(Icons.calendar_today),
-                                  )),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'Categories',
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Color(0xFF636263),
-                            fontFamily: 'Nexa'),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Container(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: new Image.asset(
-                              "assets/images/brushbutton.png",
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: new Image.asset(
-                              "assets/images/foundationbutton.png",
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: new Image.asset(
-                              "assets/images/palettebutton.png",
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: new Image.asset(
-                              "assets/images/mascarabutton.png",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dashboard'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Collections'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag), label: 'Wishlist'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_box), label: 'Profile'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        elevation: 0,
+        backgroundColor: Color(0xFFf19b8e),
+        selectedItemColor: Color(0xFF34495e),
+        unselectedItemColor: Color(0xFFf9e2e8),
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

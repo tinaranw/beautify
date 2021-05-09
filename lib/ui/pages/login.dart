@@ -11,6 +11,10 @@ class _LoginState extends State<Login> {
   final ctrlEmail = TextEditingController();
   final ctrlPassword = TextEditingController();
   bool isVisible = true;
+  bool isLoading = false;
+
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +73,7 @@ class _LoginState extends State<Login> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
+                                email = value;
                                 if (value.isEmpty) {
                                   return "Please fill in the field!";
                                 } else {
@@ -103,6 +108,7 @@ class _LoginState extends State<Login> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               validator: (value) {
+                                password = value;
                                 return value.length < 6
                                     ? "Password must have at least 6 characters!"
                                     : null;
@@ -114,12 +120,30 @@ class _LoginState extends State<Login> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      Navigator.pushNamed(
-                                          context, MainMenu.routeName);
-                                      Fluttertoast.showToast(
-                                          msg: "Successfully logged in!");
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      await AuthServices.signIn(email, password)
+                                          .then((value) {
+                                        if (value == "success") {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          ActivityServices.showToast(
+                                              "Login success",
+                                              Colors.greenAccent);
+                                          Navigator.pushReplacementNamed(
+                                              context, MainMenu.routeName);
+                                        } else {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          ActivityServices.showToast(
+                                              value, Colors.redAccent);
+                                        }
+                                      });
                                     } else {
                                       //kosongkan aja bisa
                                       Fluttertoast.showToast(
@@ -160,7 +184,8 @@ class _LoginState extends State<Login> {
                   ],
                 )
               ],
-            )
+            ),
+            isLoading == true ? ActivityServices.loadings() : Container()
           ],
         ),
       ),
