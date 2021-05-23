@@ -5,7 +5,7 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
- String date = DateFormat.yMMMd().format(DateTime.now());
+String date = DateFormat.yMMMd().format(DateTime.now());
 
 class _DashboardState extends State<Dashboard> {
   @override
@@ -19,12 +19,13 @@ class _DashboardState extends State<Dashboard> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.all(24),
         child: Stack(
           children: [
             ListView(
               children: [
-                Column(
+                Container(
+                  padding: EdgeInsets.all(24),
+                    child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -93,7 +94,9 @@ class _DashboardState extends State<Dashboard> {
                                 children: [
                                   Expanded(
                                       child: IconButton(
-                                    onPressed: () => {},
+                                    onPressed: (){
+                                      Navigator.pushNamed(context, AddProduct.routeName);
+                                    },
                                     icon: Icon(Icons.add),
                                   )),
                                   Expanded(
@@ -118,7 +121,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 25),
                     SizedBox(
                       width: double.infinity,
                       child: Text(
@@ -162,8 +165,115 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 25),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        'Reminder',
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23,
+                            color: Color(0xFF636263),
+                            fontFamily: 'Nexa'),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
+                              child: ListTile(
+                                leading: Image.asset(
+                                    "assets/images/mascaraicon.png"),
+                                title: Text(
+                                  'Maybelline Sky High Mascara',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                                subtitle: Text(
+                                  '26 June 2022',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.normal),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
+                              child: ListTile(
+                                leading: Image.asset(
+                                    "assets/images/paletteicon.png"),
+                                title: Text(
+                                  'Morphe The James Charles Artistry Palette',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                                subtitle: Text(
+                                  '26 June 2022',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.normal),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                            margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
+                              child: ListTile(
+                                leading: Image.asset(
+                                    "assets/images/foundationicon.png"),
+                                title: Text(
+                                  'Maybelline Fit Me Foundation',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                                subtitle: Text(
+                                  '26 June 2022',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.normal),
+                                  maxLines: 1,
+                                  softWrap: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
-                )
+                ))
               ],
             )
           ],

@@ -24,4 +24,9 @@ class ActivityServices {
       ),
     );
   }
+  
+  static String toIDR(String price){
+    final priceFormat = NumberFormat.currency(locale: 'ID');
+    return priceFormat.format(double.parse(price));
+  }
 }

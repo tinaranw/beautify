@@ -1,8 +1,21 @@
+import 'dart:io';
+
 import 'package:beautify/shared/shared.dart';
 import 'package:beautify/ui/pages/pages.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-void main() {
+void enablePlatformOverrideForDesktop(){
+  if(!kIsWeb && (Platform.isMacOS || Platform.isAndroid || Platform.isLinux)){
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+}
+
+void main() async{
+  enablePlatformOverrideForDesktop();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -19,8 +32,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => Splash(),
         Splash.routeName: (context) => Splash(),
         MainMenu.routeName: (context) => MainMenu(),
+        Landing.routeName: (context) => Landing(),
         Login.routeName: (context) => Login(),
         Register.routeName: (context) => Register(),
+        AddProduct.routeName: (context) => AddProduct(),
       },
     );
   }

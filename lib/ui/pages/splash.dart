@@ -6,33 +6,32 @@ class Splash extends StatefulWidget {
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash> {
-
-  final splashDelay = 5;
+class _SplashState extends State<Splash> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-    _loadWidget();
+    _loadSplash();
   }
 
-  _loadWidget() async {
-    var _duration = Duration(seconds: splashDelay);
-    return Timer(_duration, navigationPage);
+  _loadSplash() async {
+    var _duration = Duration(seconds: 3);
+    return Timer(_duration, checkAuth);
   }
 
-  void navigationPage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Landing()));
+  void checkAuth() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      Navigator.pushReplacementNamed(context, MainMenu.routeName);
+      ActivityServices.showToast(
+          "Welcome back " + auth.currentUser.email, Colors.blue);
+    } else {
+      Navigator.pushReplacementNamed(context, Landing.routeName);
+    }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Login'),
-      //   centerTitle: true,
-      //   elevation: 0,
-      // ),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,

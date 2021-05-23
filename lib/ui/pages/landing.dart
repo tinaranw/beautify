@@ -1,6 +1,8 @@
 part of 'pages.dart';
 
 class Landing extends StatefulWidget {
+  
+  static const String routeName = "/landing";
   @override
   _LandingState createState() => _LandingState();
 }
@@ -9,11 +11,6 @@ class _LandingState extends State<Landing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Login'),
-      //   centerTitle: true,
-      //   elevation: 0,
-      // ),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
