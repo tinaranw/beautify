@@ -192,6 +192,7 @@ class _RegisterState extends State<Register> {
                                               ctrlPhone.text,
                                               ctrlEmail.text,
                                               ctrlPassword.text,
+                                              '0',
                                               "",
                                               "");
                                           await AuthServices.signUp(users)

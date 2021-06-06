@@ -34,6 +34,7 @@ class Products extends Equatable {
         productId,
         productName,
         productBrand,
+        productDate,
         productType,
         productCondition,
         productDesc,

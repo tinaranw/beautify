@@ -1,18 +1,17 @@
 part of 'pages.dart';
 
-class Dashboard extends StatefulWidget {
+class SummaryPage extends StatefulWidget {
+  static const String routeName = "/summarypage";
   @override
-  _DashboardState createState() => _DashboardState();
+  _SummaryPageState createState() => _SummaryPageState();
 }
 
-String date = DateFormat.yMMMd().format(DateTime.now());
-
-class _DashboardState extends State<Dashboard> {
+class _SummaryPageState extends State<SummaryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard"),
+        title: Text("Summary"),
         automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: false,

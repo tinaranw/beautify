@@ -59,7 +59,9 @@ class _ProductCardState extends State<ProductCard> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ElevatedButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                       Navigator.pushNamed(context, ProductDetail.routeName, arguments: product);
+                                      },
                                       icon: Icon(CupertinoIcons.eye_fill),
                                       label: Text("Show Data"),
                                       style: ElevatedButton.styleFrom(

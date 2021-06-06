@@ -1,18 +1,17 @@
 part of 'pages.dart';
 
-class Dashboard extends StatefulWidget {
+class Calendar extends StatefulWidget {
+  static const String routeName = "/calendar";
   @override
-  _DashboardState createState() => _DashboardState();
+  _CalendarState createState() => _CalendarState();
 }
 
-String date = DateFormat.yMMMd().format(DateTime.now());
-
-class _DashboardState extends State<Dashboard> {
+class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard"),
+        title: Text("Calendar"),
         automaticallyImplyLeading: false,
       ),
       resizeToAvoidBottomInset: false,

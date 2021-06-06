@@ -25,3 +25,7 @@ part 'wishlist.dart';
 part 'addproduct.dart';
 part 'dashboard.dart';
 part 'productdetail.dart';
+part 'summary.dart';
+part 'statistics.dart';
+part 'calendar.dart';
+part 'editproduct.dart';

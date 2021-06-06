@@ -15,6 +15,7 @@ class ActivityServices {
   static Container loadings(){
     return Container(
       alignment: Alignment.center,
+      // padding: EdgeInsets.all(10),
       width: double.infinity,
       height: double.infinity,
       color: Colors.black26,

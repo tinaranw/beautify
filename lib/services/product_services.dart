@@ -7,6 +7,7 @@ class ProductServices {
       FirebaseFirestore.instance.collection("products");
   static DocumentReference productDocument;
 
+  static Products products;
   static Reference ref;
   static UploadTask uploadTask;
   static String imgUrl;
@@ -51,6 +52,11 @@ class ProductServices {
     }
   }
 
+  static Future getProductById(String id) async {
+    var doc = productCollection.doc(id);
+    return doc;
+  }
+
   static Future<bool> deleteProduct(String id) async {
     bool hsl = true;
     await Firebase.initializeApp();
@@ -62,4 +68,6 @@ class ProductServices {
 
     return hsl;
   }
+
+  
 }

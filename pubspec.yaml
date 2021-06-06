@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   async: ^2.5.0
-  cloud_firestore: ^2.0.0
+  cloud_firestore: ^1.0.7
   cupertino_icons: ^1.0.2
   email_validator: ^2.0.1
   equatable: ^2.0.0

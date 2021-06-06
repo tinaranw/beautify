@@ -6,13 +6,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-void enablePlatformOverrideForDesktop(){
-  if(!kIsWeb && (Platform.isMacOS || Platform.isAndroid || Platform.isLinux)){
+void enablePlatformOverrideForDesktop() {
+  if (!kIsWeb && (Platform.isMacOS || Platform.isAndroid || Platform.isLinux)) {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   }
 }
 
-void main() async{
+void main() async {
   enablePlatformOverrideForDesktop();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,6 +36,10 @@ class MyApp extends StatelessWidget {
         Login.routeName: (context) => Login(),
         Register.routeName: (context) => Register(),
         AddProduct.routeName: (context) => AddProduct(),
+        ProductDetail.routeName: (context) => ProductDetail(),
+        Statistics.routeName: (context) => Statistics(),
+        SummaryPage.routeName: (context) => SummaryPage(),
+        Calendar.routeName: (context) => Calendar(),
       },
     );
   }
