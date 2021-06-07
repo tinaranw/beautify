@@ -99,15 +99,19 @@ class _ProfileState extends State<Profile> {
                                 Container(
                                   padding: EdgeInsets.only(top: 10),
                                   child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'Settings',
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 23,
-                                            color: Color(0xFF636263),
-                                            fontFamily: 'Nexa'),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 24.0),
+                                        child: Text(
+                                          'Settings',
+                                          textAlign: TextAlign.left,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 23,
+                                              color: Color(0xFF636263),
+                                              fontFamily: 'Nexa'),
+                                        ),
                                       ),
                                       BalanceCard(),
                                     ],

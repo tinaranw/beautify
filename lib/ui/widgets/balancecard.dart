@@ -17,7 +17,7 @@ class _BalanceCardState extends State<BalanceCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
       height: 170,
       child: Card(
         shape: RoundedRectangleBorder(

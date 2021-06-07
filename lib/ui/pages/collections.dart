@@ -12,7 +12,7 @@ class _CollectionsState extends State<Collections> {
 
   Widget buildBody() {
     return Container(
-      height: 300,
+      height: 580,
         padding: EdgeInsets.all(12),
         child: StreamBuilder<QuerySnapshot>(
           stream: productCollection.snapshots(),
