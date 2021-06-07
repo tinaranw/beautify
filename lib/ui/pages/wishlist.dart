@@ -16,6 +16,7 @@ class _WishlistState extends State<Wishlist> {
       FirebaseFirestore.instance.collection("users");
   String currentBudget, totalExpense;
 
+
   Widget buildBody() {
     return Container(
         height: 410,
@@ -135,7 +136,7 @@ class _WishlistState extends State<Wishlist> {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return Text(
-                                ActivityServices.toIDR(currentBudget),
+                                '$currentBudget',
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

@@ -169,8 +169,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                             return ActivityServices.loadings();
                                           default:
                                             return new Text(
-                                                ActivityServices.toIDR(
-                                                    product.productPrice),
+                                                product.productPrice,
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: 'Nexa',

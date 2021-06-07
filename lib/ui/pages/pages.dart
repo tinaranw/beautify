@@ -30,3 +30,4 @@ part 'summary.dart';
 part 'statistics.dart';
 part 'calendar.dart';
 part 'editproduct.dart';
+part 'editbalance.dart';

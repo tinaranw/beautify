@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         SummaryPage.routeName: (context) => SummaryPage(),
         Calendar.routeName: (context) => Calendar(),
         AddWishlist.routeName: (context) => AddWishlist(),
+        EditBalance.routeName: (context) => EditBalance(),
       },
     );
   }

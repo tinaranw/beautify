@@ -8,6 +8,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+ 
   bool isLoading = false;
   String msg = "Fail";
   CollectionReference userCollection =
@@ -16,7 +17,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    Users users;
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Color(0xFFF6C9A8),
+        color: Color(0xFFECD2DF),
         child: Stack(
           children: [
             Align(

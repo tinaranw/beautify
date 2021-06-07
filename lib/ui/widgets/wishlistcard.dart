@@ -36,7 +36,7 @@ class _WishlistCardtState extends State<WishlistCard> {
               softWrap: true,
             ),
             subtitle: Text(
-              ActivityServices.toIDR(wishlist.wishlistPrice) +
+              wishlist.wishlistPrice +
                   " (" +
                   (wishlist.wishlistTotal) +
                   ")",

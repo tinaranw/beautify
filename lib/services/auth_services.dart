@@ -27,6 +27,7 @@ class AuthServices {
       'phone': users.phone,
       'email': users.email,
       'password': users.password,
+      'balance': '0',
       'token': token,
       'isOn': '0',
       'createdAt': dateNow,
@@ -81,5 +82,20 @@ class AuthServices {
     });
 
     return true;
+  }
+
+  static Future<String> updateBalance(String uid, String balance) async {
+    await Firebase.initializeApp();
+    String msg = "";
+
+    await userCollection.doc(uid).update({
+      'balance': balance,
+    }).then((value) {
+      msg = "success";
+    }).catchError((onError) {
+      msg = onError;
+    });
+
+    return msg;
   }
 }

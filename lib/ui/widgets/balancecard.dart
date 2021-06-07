@@ -13,6 +13,7 @@ class _BalanceCardState extends State<BalanceCard> {
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
   String currentBalance;
+  String currentUID = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +45,7 @@ class _BalanceCardState extends State<BalanceCard> {
                     child: FutureBuilder(
                       future: _balance(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        return Text(ActivityServices.toIDR(currentBalance),
+                        return Text('IDR' + ('$currentBalance'),
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               fontSize: 18,
@@ -63,7 +64,8 @@ class _BalanceCardState extends State<BalanceCard> {
                   Expanded(
                       child: IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, AddProduct.routeName);
+                      Navigator.pushNamed(context, EditBalance.routeName,
+                          arguments: currentUID);
                     },
                     icon: Icon(Icons.edit),
                   )),

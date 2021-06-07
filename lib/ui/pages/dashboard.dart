@@ -94,8 +94,7 @@ class _DashboardState extends State<Dashboard> {
                                           builder: (BuildContext context,
                                               AsyncSnapshot snapshot) {
                                             return Text(
-                                                ActivityServices.toIDR(
-                                                    currentBalance),
+                                                'IDR' +('$currentBalance'),
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                   fontSize: 18,
