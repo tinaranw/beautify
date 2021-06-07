@@ -34,15 +34,28 @@ class LocalNotifyManager {
     });
   }
 
-  Future<void> showNotification() async {
+  Future<void> showNotification(String products) async {
     var androidChannel = AndroidNotificationDetails(
         'CHANNEL_ID', 'CHANNEL_NAME', 'CHANNEL_DESCRIPTION',
-        importance: Importance.max, priority: Priority.high, playSound: true);
+        importance: Importance.max, priority: Priority.high, playSound: true, icon: 'notif_icon', enableLights: true);
     var platformChannel = NotificationDetails(android: androidChannel);
     await flutterLocalNotificationsPlugin.show(
-        0, 'Test Title', 'Test Body', platformChannel,
+        0, 'bea(u)tify Alert!', '$products', platformChannel,
         payload: 'New Payload');
   }
+
+  // Future<void> showDailyAtTime() async {
+  //   var time = Time(2, 14, 0);
+  //   var androidChannel = AndroidNotificationDetails(
+  //       'CHANNEL_ID', 'CHANNEL_NAME', 'CHANNEL_DESCRIPTION',
+  //       importance: Importance.max, priority: Priority.high, playSound: true, icon: 'notif_icon', timeoutAfter: 5000, enableLights: true);
+  //   var platformChannel = NotificationDetails(android: androidChannel);
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //       0, 'Daily Test Title ${time.hour} - ${time.minute} - ${time.second}', 'Daily Test Body', time, platformChannel,
+  //       payload: 'New Payload');
+  // }
+
+ 
 }
 
 LocalNotifyManager localNotifyManager = LocalNotifyManager.init();

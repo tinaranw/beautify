@@ -17,15 +17,14 @@ class _DashboardState extends State<Dashboard> {
       FirebaseFirestore.instance.collection("products");
   String currentUsername, currentBalance;
 
-      
-
   Widget buildBody() {
     return Container(
         height: 300,
         padding: EdgeInsets.only(top: 10),
         child: StreamBuilder<QuerySnapshot>(
-          stream: productCollection.where('productDate', isEqualTo: checkDate)
-      .snapshots(),
+          stream: productCollection
+              .where('productDate', isEqualTo: checkDate)
+              .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -98,6 +97,7 @@ class _DashboardState extends State<Dashboard> {
                                 fontFamily: 'SF'),
                           ),
                         ),
+                        
                         SizedBox(height: 10),
                         SizedBox(
                           width: double.infinity,

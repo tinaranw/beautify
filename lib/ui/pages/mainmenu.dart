@@ -8,6 +8,7 @@ class MainMenu extends StatefulWidget {
   _MainMenuState createState() => _MainMenuState();
 }
 
+
 class _MainMenuState extends State<MainMenu> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
@@ -26,17 +27,7 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    localNotifyManager.setOnNotificationReceive(onNotificationReceive);
-    localNotifyManager.setOnNotificationClick(onNotificationClick);
-
-  }
-
-  onNotificationReceive(ReceiveNotification notification){
-    print('Notification Received: ${notification.id}');
-  }
-
-  onNotificationClick(String payload){
-    print('Payload $payload');
+  
   }
 
   @override

@@ -7,10 +7,27 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> with TickerProviderStateMixin {
+  String checkDate = DateFormat('d-MM-yyyy').format(DateTime.now());
+  CollectionReference productCollection =
+      FirebaseFirestore.instance.collection("products");
+  String currentUsername, currentBalance;
+  String productName;
+  String listExpiredProducts = "[!]";
+
   @override
   void initState() {
     super.initState();
     _loadSplash();
+    localNotifyManager.setOnNotificationReceive(onNotificationReceive);
+    localNotifyManager.setOnNotificationClick(onNotificationClick);
+  }
+
+  onNotificationReceive(ReceiveNotification notification) {
+    print('Notification Received: ${notification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    print('Payload $payload');
   }
 
   _loadSplash() async {
@@ -21,9 +38,11 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   void checkAuth() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser != null) {
+      listExpiredProducts = getListExpiredProducts();
       Navigator.pushReplacementNamed(context, MainMenu.routeName);
       ActivityServices.showToast(
           "Welcome back " + auth.currentUser.email, Colors.blue);
+      await localNotifyManager.showNotification("Your item(s) is expiring soon!");
     } else {
       Navigator.pushReplacementNamed(context, Landing.routeName);
     }
@@ -70,5 +89,19 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  String getListExpiredProducts() {
+    productCollection
+        .where('productDate', isEqualTo: checkDate)
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        listExpiredProducts =
+            listExpiredProducts + ", " + result.get("productName");
+        // print(listExpiredProducts);
+      });
+    });
+    return listExpiredProducts;
   }
 }
