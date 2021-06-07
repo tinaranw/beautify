@@ -10,3 +10,4 @@ part 'categoryselector.dart';
 part 'productcard.dart';
 part 'wishlistcard.dart';
 part 'balancecard.dart';
+part 'remindercard.dart';

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
+import 'package:beautify/managers/LocalNotifyManager.dart';
 
 import 'package:intl/intl.dart';
 

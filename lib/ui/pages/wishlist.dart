@@ -136,7 +136,7 @@ class _WishlistState extends State<Wishlist> {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return Text(
-                                '$currentBudget',
+                                'IDR'+ '$currentBudget',
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

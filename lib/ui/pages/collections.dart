@@ -81,45 +81,6 @@ class _CollectionsState extends State<Collections> {
                       ),
                     ),
                     CategorySelector(),
-                    // Container(
-                    //   padding: EdgeInsets.all(20),
-                    //   child: Row(
-                    //     children: [
-                    //       Image.asset("assets/images/paletteicon.png",
-                    //           height: 210),
-                    //       SizedBox(width: 8),
-                    //       Column(
-                    //         children: [
-                    //           Image.asset(
-                    //             "assets/images/brushicon.png",
-                    //             height: 100,
-                    //           ),
-                    //           SizedBox(height: 8),
-                    //           Image.asset(
-                    //             "assets/images/foundationicon.png",
-                    //             height: 100,
-                    //           )
-                    //         ],
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-                    // Container(
-                    //   padding: EdgeInsets.only(left: 24, top: 20),
-                    //   child: SizedBox(
-                    //     width: double.infinity,
-                    //     child: Text(
-                    //       'All Collected Products',
-                    //       textAlign: TextAlign.left,
-                    //       overflow: TextOverflow.ellipsis,
-                    //       style: TextStyle(
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 23,
-                    //           color: Color(0xFF636263),
-                    //           fontFamily: 'Nexa'),
-                    //     ),
-                    //   ),
-                    // ),
                     buildBody(),
                   ],
                 )

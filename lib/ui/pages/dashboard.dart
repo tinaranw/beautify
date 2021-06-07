@@ -8,11 +8,61 @@ class Dashboard extends StatefulWidget {
 }
 
 String date = DateFormat.yMMMd().format(DateTime.now());
+String checkDate = DateFormat('d-MM-yyyy').format(DateTime.now());
 
 class _DashboardState extends State<Dashboard> {
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
+  CollectionReference productCollection =
+      FirebaseFirestore.instance.collection("products");
   String currentUsername, currentBalance;
+
+      
+
+  Widget buildBody() {
+    return Container(
+        height: 300,
+        padding: EdgeInsets.only(top: 10),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: productCollection.where('productDate', isEqualTo: checkDate)
+      .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text("Failed to load data!");
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ActivityServices.loadings();
+            }
+            return new ListView(
+              children: snapshot.data.docs.map((DocumentSnapshot doc) {
+                Products products;
+                if (doc.data()['addBy'] ==
+                    FirebaseAuth.instance.currentUser.uid) {
+                  products = new Products(
+                    doc.data()['productId'],
+                    doc.data()['productName'],
+                    doc.data()['productBrand'],
+                    doc.data()['productDate'],
+                    doc.data()['productType'],
+                    doc.data()['productCondition'],
+                    doc.data()['productDesc'],
+                    doc.data()['productPrice'],
+                    doc.data()['productImage'],
+                    doc.data()['addBy'],
+                    doc.data()['createdAt'],
+                    doc.data()['updatedAt'],
+                  );
+                } else {
+                  products = null;
+                }
+                return ReminderCard(products: products);
+              }).toList(),
+            );
+          },
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +107,7 @@ class _DashboardState extends State<Dashboard> {
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return Text(
                                 'Welcome, $currentUsername',
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -94,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
                                           builder: (BuildContext context,
                                               AsyncSnapshot snapshot) {
                                             return Text(
-                                                'IDR' +('$currentBalance'),
+                                                'IDR' + ('$currentBalance'),
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                   fontSize: 18,
@@ -207,105 +257,7 @@ class _DashboardState extends State<Dashboard> {
                                 fontFamily: 'Nexa'),
                           ),
                         ),
-                        Container(
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, ProductDetail.routeName);
-                                },
-                                child: Card(
-                                  elevation: 2,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
-                                    child: ListTile(
-                                      leading: Image.asset(
-                                          "assets/images/mascaraicon.png"),
-                                      title: Text(
-                                        'Maybelline Sky High Mascara',
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold),
-                                        maxLines: 1,
-                                        softWrap: true,
-                                      ),
-                                      subtitle: Text(
-                                        '26 June 2022',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.normal),
-                                        maxLines: 1,
-                                        softWrap: true,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
-                                  child: ListTile(
-                                    leading: Image.asset(
-                                        "assets/images/paletteicon.png"),
-                                    title: Text(
-                                      'Morphe The James Charles Artistry Palette',
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                      maxLines: 1,
-                                      softWrap: true,
-                                    ),
-                                    subtitle: Text(
-                                      '26 June 2022',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal),
-                                      maxLines: 1,
-                                      softWrap: true,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                margin: EdgeInsets.fromLTRB(4, 8, 4, 8),
-                                child: Container(
-                                  padding: EdgeInsets.fromLTRB(4, 12, 4, 12),
-                                  child: ListTile(
-                                    leading: Image.asset(
-                                        "assets/images/foundationicon.png"),
-                                    title: Text(
-                                      'Maybelline Fit Me Foundation',
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                      maxLines: 1,
-                                      softWrap: true,
-                                    ),
-                                    subtitle: Text(
-                                      '26 June 2022',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.normal),
-                                      maxLines: 1,
-                                      softWrap: true,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        buildBody(),
                       ],
                     ))
               ],

@@ -30,4 +30,6 @@ class ActivityServices {
     final priceFormat = NumberFormat.currency(locale: 'ID');
     return priceFormat.format(double.parse(price));
   }
+
+  
 }

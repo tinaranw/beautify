@@ -1,5 +1,7 @@
 part of 'pages.dart';
 
+
+
 class MainMenu extends StatefulWidget {
   static const String routeName = "/mainmenu";
   @override
@@ -8,7 +10,6 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   int _selectedIndex = 0;
-
   static List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Collections(),
@@ -25,6 +26,17 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
+    localNotifyManager.setOnNotificationReceive(onNotificationReceive);
+    localNotifyManager.setOnNotificationClick(onNotificationClick);
+
+  }
+
+  onNotificationReceive(ReceiveNotification notification){
+    print('Notification Received: ${notification.id}');
+  }
+
+  onNotificationClick(String payload){
+    print('Payload $payload');
   }
 
   @override
@@ -53,4 +65,5 @@ class _MainMenuState extends State<MainMenu> {
       ),
     );
   }
+  
 }
