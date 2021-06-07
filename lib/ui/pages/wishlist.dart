@@ -1,6 +1,8 @@
 part of 'pages.dart';
 
 class Wishlist extends StatefulWidget {
+  final Users users;
+  Wishlist({this.users});
   @override
   _WishlistState createState() => _WishlistState();
 }
@@ -8,15 +10,18 @@ class Wishlist extends StatefulWidget {
 class _WishlistState extends State<Wishlist> {
   bool isLoading = false;
   String uid = FirebaseAuth.instance.currentUser.uid;
-  CollectionReference productCollection =
-      FirebaseFirestore.instance.collection("products");
+  CollectionReference wishlistCollection =
+      FirebaseFirestore.instance.collection("wishlist");
+  CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("users");
+  String currentBudget, totalExpense;
 
   Widget buildBody() {
     return Container(
-        height: 470,
+        height: 410,
         padding: EdgeInsets.all(12),
         child: StreamBuilder<QuerySnapshot>(
-          stream: productCollection.snapshots(),
+          stream: wishlistCollection.snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
@@ -27,27 +32,26 @@ class _WishlistState extends State<Wishlist> {
             }
             return new ListView(
               children: snapshot.data.docs.map((DocumentSnapshot doc) {
-                Products products;
+                Wishlists wishlists;
                 if (doc.data()['addBy'] ==
                     FirebaseAuth.instance.currentUser.uid) {
-                  products = new Products(
-                    doc.data()['productId'],
-                    doc.data()['productName'],
-                    doc.data()['productBrand'],
-                    doc.data()['productDate'],
-                    doc.data()['productType'],
-                    doc.data()['productCondition'],
-                    doc.data()['productDesc'],
-                    doc.data()['productPrice'],
-                    doc.data()['productImage'],
+                  wishlists = new Wishlists(
+                    doc.data()['wishlistId'],
+                    doc.data()['wishlistName'],
+                    doc.data()['wishlistBrand'],
+                    doc.data()['wishlistType'],
+                    doc.data()['wishlistPrice'],
+                    doc.data()['wishlistTotal'],
+                    doc.data()['wishlistImage'],
+                    doc.data()['wishlistChecked'],
                     doc.data()['addBy'],
                     doc.data()['createdAt'],
                     doc.data()['updatedAt'],
                   );
                 } else {
-                  products = null;
+                  wishlists = null;
                 }
-                return ProductCardBudget(products: products);
+                return WishlistCard(wishlists: wishlists);
               }).toList(),
             );
           },
@@ -97,6 +101,24 @@ class _WishlistState extends State<Wishlist> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom:20),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                              onPressed: () {
+                                 Navigator.pushReplacementNamed(context, AddWishlist.routeName);
+                              },
+                              icon: Icon(Icons.add),
+                              label: Text("Add to cart"),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFF74D6D7),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(30.0)))),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -108,13 +130,20 @@ class _WishlistState extends State<Wishlist> {
                                 fontFamily: 'Nexa',
                                 color: Color(0x59636263)),
                           ),
-                          Text(
-                            '\$450.50',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Nexa',
-                                color: Color(0xFF636263)),
+                          FutureBuilder(
+                            future: _budget(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              return Text(
+                                ActivityServices.toIDR(currentBudget),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Nexa',
+                                    color: Color(0xFF636263)),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -154,5 +183,20 @@ class _WishlistState extends State<Wishlist> {
         ),
       ),
     );
+  }
+
+  _budget() async {
+    // ignore: await_only_futures
+    final myuser = await FirebaseAuth.instance.currentUser.uid;
+    if (myuser != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(myuser)
+          .get()
+          .then((ds) {
+        currentBudget = ds.data()['balance'];
+        print("budget" + currentBudget);
+      });
+    }
   }
 }

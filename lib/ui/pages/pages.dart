@@ -23,6 +23,7 @@ part 'collections.dart';
 part 'profile.dart';
 part 'wishlist.dart';
 part 'addproduct.dart';
+part 'addwishlist.dart';
 part 'dashboard.dart';
 part 'productdetail.dart';
 part 'summary.dart';

@@ -16,3 +16,4 @@ import 'package:intl/intl.dart';
 part 'auth_services.dart';
 part 'activity_services.dart';
 part 'product_services.dart';
+part 'wishlist_services.dart';

@@ -20,99 +20,33 @@ class _ProductDetailState extends State<ProductDetail> {
           title: Text("Product Detail"),
           automaticallyImplyLeading: false,
         ),
-        body: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(color: Color(0xFFFFF)),
-            ),
-            Align(
-              alignment: FractionalOffset.topCenter,
-              child: Container(
-                width: double.infinity,
-                height: 300,
-                decoration: BoxDecoration(
-                    color: Color(0xFF99E4F9),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30))),
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                    child: Align(
-                  alignment: FractionalOffset.topCenter,
-                  child: Container(
-                      margin: EdgeInsets.only(top: 110),
-                      // decoration: BoxDecoration(color: Color(0xFF636363)),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [],
-                      )),
-                )),
-              ],
-            ),
-            Container(
-                padding: EdgeInsets.all(24),
-                child: Expanded(
-                  child: SizedBox(
-                    child: ListView(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 320),
-                          child: Column(
-                            children: [
-                              StreamBuilder<QuerySnapshot>(
-                                stream: productCollection.snapshots(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text("Failed to load data!");
-                                  }
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return ActivityServices.loadings();
-                                    default:
-                                      return new Text(product.productName,
-                                          style: TextStyle(
-                                              fontSize: 24,
-                                              fontFamily: 'Nexa',
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xff564B46)),
-                                          textAlign: TextAlign.left);
-                                  }
-                                },
-                              ),
-                              // Text(
-                              //   product.productName!=null ? product.productName : 'Product Name',
-                              //   textAlign: TextAlign.left,
-                              //   style: TextStyle(
-                              //       fontWeight: FontWeight.bold,
-                              //       fontSize: 22,
-                              //       color: Color(0xFF636263),
-                              //       fontFamily: 'Nexa'),
-                              // ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Color(0xFF99E4F9),
+          child: Stack(
+            children: [
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Padding(
+                    padding: EdgeInsets.all(0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 480,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30))),
+                      child: ListView(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // print((product.productType).toString()),
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFB7E5E3),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
+                                  padding: EdgeInsets.all(10),
                                   child: StreamBuilder<QuerySnapshot>(
                                     stream: productCollection.snapshots(),
                                     builder: (BuildContext context,
@@ -126,139 +60,296 @@ class _ProductDetailState extends State<ProductDetail> {
                                         default:
                                           return new Text(product.productName,
                                               style: TextStyle(
-                                                fontSize: 16,
-                                                fontFamily: 'Nexa',
-                                                color: Color(0xff564B46),
-                                              ));
+                                                  fontSize: 24,
+                                                  fontFamily: 'Nexa',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff564B46)),
+                                              textAlign: TextAlign.left);
                                       }
                                     },
                                   ),
                                 ),
-                                SizedBox(width: 20),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFC8A6CB),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: StreamBuilder<QuerySnapshot>(
-                                    stream: productCollection.snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text("Failed to load data!");
-                                      }
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.waiting:
-                                          return ActivityServices.loadings();
-                                        default:
-                                          return new Text(product.productName,
-                                              style: TextStyle(
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        // print((product.productType).toString()),
+                                        Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFB7E5E3),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: StreamBuilder<QuerySnapshot>(
+                                            stream:
+                                                productCollection.snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasError) {
+                                                return Text(
+                                                    "Failed to load data!");
+                                              }
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.waiting:
+                                                  return ActivityServices
+                                                      .loadings();
+                                                default:
+                                                  return new Text(
+                                                      product.productType,
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontFamily: 'Nexa',
+                                                        color:
+                                                            Color(0xff564B46),
+                                                      ));
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                        Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFC8A6CB),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: StreamBuilder<QuerySnapshot>(
+                                            stream:
+                                                productCollection.snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasError) {
+                                                return Text(
+                                                    "Failed to load data!");
+                                              }
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.waiting:
+                                                  return ActivityServices
+                                                      .loadings();
+                                                default:
+                                                  return new Text(
+                                                      product.productCondition,
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontFamily: 'Nexa',
+                                                          color:
+                                                              Color(0xff564B46),
+                                                          backgroundColor:
+                                                              Color(
+                                                                  0xFFC8A6CB)));
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: productCollection.snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasError) {
+                                          return Text("Failed to load data!");
+                                        }
+                                        switch (snapshot.connectionState) {
+                                          case ConnectionState.waiting:
+                                            return ActivityServices.loadings();
+                                          default:
+                                            return new Text(
+                                                ActivityServices.toIDR(
+                                                    product.productPrice),
+                                                style: TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: 'Nexa',
-                                                  color: Color(0xff564B46),
-                                                  backgroundColor:
-                                                      Color(0xFFC8A6CB)));
-                                      }
-                                    },
+                                                  color: Color(0xFFDE5E52),
+                                                ));
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                const Divider(
+                                  height: 20,
+                                  thickness: 2,
+                                  indent: 0,
+                                  endIndent: 0,
+                                ),
+                                SizedBox(height: 4),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    'General Info',
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Color(0xFF636363),
+                                        fontFamily: 'Nexa'),
                                   ),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: StreamBuilder<QuerySnapshot>(
+                                        stream: productCollection.snapshots(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text("Failed to load data!");
+                                          }
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.waiting:
+                                              return ActivityServices
+                                                  .loadings();
+                                            default:
+                                              return new RichText(
+                                                text: TextSpan(
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText2,
+                                                  children: [
+                                                    WidgetSpan(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    2.0),
+                                                        child: Icon(
+                                                            Icons.bookmark),
+                                                      ),
+                                                    ),
+                                                    TextSpan(
+                                                        text: product
+                                                            .productBrand),
+                                                  ],
+                                                ),
+                                              );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: StreamBuilder<QuerySnapshot>(
+                                        stream: productCollection.snapshots(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                snapshot) {
+                                          if (snapshot.hasError) {
+                                            return Text("Failed to load data!");
+                                          }
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.waiting:
+                                              return ActivityServices
+                                                  .loadings();
+                                            default:
+                                              return new RichText(
+                                                text: TextSpan(
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText2,
+                                                  children: [
+                                                    WidgetSpan(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    2.0),
+                                                        child: Icon(
+                                                            Icons.lock_clock),
+                                                      ),
+                                                    ),
+                                                    TextSpan(
+                                                        text: product
+                                                            .productDate),
+                                                  ],
+                                                ),
+                                              );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    'Description',
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Color(0xFF636363),
+                                        fontFamily: 'Nexa'),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                StreamBuilder<QuerySnapshot>(
+                                  stream: productCollection.snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text("Failed to load data!");
+                                    }
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                        return ActivityServices.loadings();
+                                      default:
+                                        return new Text(product.productDesc,
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Nexa',
+                                              color: Color(0xff564B46),
+                                            ));
+                                    }
+                                  },
                                 ),
                               ],
                             ),
-                            StreamBuilder<QuerySnapshot>(
-                              stream: productCollection.snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text("Failed to load data!");
-                                }
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return ActivityServices.loadings();
-                                  default:
-                                    return new Text(
-                                        ActivityServices.toIDR(
-                                            product.productPrice),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontFamily: 'Nexa',
-                                          color: Color(0xff564B46),
-                                        ));
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        const Divider(
-                          height: 20,
-                          thickness: 2,
-                          indent: 0,
-                          endIndent: 0,
-                        ),
-                        SizedBox(height: 4),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            'Description',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Color(0xFF636363),
-                                fontFamily: 'Nexa'),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: productCollection.snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return Text("Failed to load data!");
-                            }
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return ActivityServices.loadings();
-                              default:
-                                return new Text(product.productBrand,
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Nexa',
-                                      color: Color(0xFF636363),
-                                    ));
-                            }
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        StreamBuilder<QuerySnapshot>(
-                          stream: productCollection.snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return Text("Failed to load data!");
-                            }
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return ActivityServices.loadings();
-                              default:
-                                return new Text(product.productDesc,
-                                    textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Nexa',
-                                      color: Color(0xff564B46),
-                                    ));
-                            }
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 80, right: 30),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    height: 200.0,
+                    width: 200.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(product.productImage)),
+                      shape: BoxShape.circle,
                     ),
                   ),
-                )),
-          ],
+                ),
+              )
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},

@@ -45,7 +45,7 @@ class _ProductCardState extends State<ProductCard> {
                 IconButton(
                   icon: Icon(
                     CupertinoIcons.ellipsis_circle_fill,
-                    color: Colors.orangeAccent,
+                    color: Color(0xFF74D6D7),
                   ),
                   onPressed: () {
                     showModalBottomSheet(
@@ -65,12 +65,17 @@ class _ProductCardState extends State<ProductCard> {
                                       icon: Icon(CupertinoIcons.eye_fill),
                                       label: Text("Show Data"),
                                       style: ElevatedButton.styleFrom(
-                                          primary: Colors.green)),
+                                          primary: Color(0xFFB7E5E3))),
                                   ElevatedButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, EditProduct.routeName, arguments: product);
+                                      },
                                       icon: Icon(
                                           CupertinoIcons.pencil_circle_fill),
-                                      label: Text("Edit Data")),
+                                      label: Text("Edit Data"),
+                                       style: ElevatedButton.styleFrom(
+                                          primary: Color(0xFFC8A6CB))),
+                                      
                                   ElevatedButton.icon(
                                       onPressed: () async {
                                         bool result =

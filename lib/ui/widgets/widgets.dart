@@ -8,5 +8,5 @@ import 'package:beautify/ui/pages/pages.dart';
 
 part 'categoryselector.dart';
 part 'productcard.dart';
-part 'productcardbudget.dart';
+part 'wishlistcard.dart';
 part 'balancecard.dart';

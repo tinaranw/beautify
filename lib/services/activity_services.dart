@@ -16,8 +16,8 @@ class ActivityServices {
     return Container(
       alignment: Alignment.center,
       // padding: EdgeInsets.all(10),
-      width: double.infinity,
-      height: double.infinity,
+      width: 50,
+      height: 50,
       color: Colors.black26,
       child: SpinKitFadingCircle(
         size: 50,

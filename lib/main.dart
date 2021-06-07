@@ -13,6 +13,7 @@ void enablePlatformOverrideForDesktop() {
 }
 
 void main() async {
+  ErrorWidget.builder = (FlutterErrorDetails details) => Container();
   enablePlatformOverrideForDesktop();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,10 +37,12 @@ class MyApp extends StatelessWidget {
         Login.routeName: (context) => Login(),
         Register.routeName: (context) => Register(),
         AddProduct.routeName: (context) => AddProduct(),
+        EditProduct.routeName: (context) => EditProduct(),
         ProductDetail.routeName: (context) => ProductDetail(),
         Statistics.routeName: (context) => Statistics(),
         SummaryPage.routeName: (context) => SummaryPage(),
         Calendar.routeName: (context) => Calendar(),
+        AddWishlist.routeName: (context) => AddWishlist(),
       },
     );
   }

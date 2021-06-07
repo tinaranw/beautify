@@ -13,6 +13,7 @@ class _AddProductState extends State<AddProduct> {
   String productCondition;
 
   List listType = [
+    'Not Selected',
     'Primer',
     'Foundation',
     'Concealer',
@@ -28,11 +29,11 @@ class _AddProductState extends State<AddProduct> {
     'Lip',
     'Setting Spray'
   ];
-  String dropdownTypeValue = 'Primer';
+  String dropdownTypeValue = 'Not Selected';
 
-  List listCondition = ['Perfect', 'Good', 'Bad'];
+  List listCondition = ['Not Selected','Perfect', 'Good', 'Bad'];
 
-  String dropdownConditionValue = 'Perfect';
+  String dropdownConditionValue = 'Not Selected';
 
   final _formKey = GlobalKey<FormState>();
   final ctrlName = TextEditingController();
@@ -105,6 +106,8 @@ class _AddProductState extends State<AddProduct> {
       imageFile = null;
     });
   }
+
+  var myFormat = DateFormat('d-MM-yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +245,7 @@ class _AddProductState extends State<AddProduct> {
                                   setState(() {
                                     dropdownTypeValue = newTypeValue;
                                     productType = newTypeValue;
+                                     print("product type: "+ productType);
                                   });
                                 },
                                 items: listType.map((valueItem) {
@@ -278,6 +282,7 @@ class _AddProductState extends State<AddProduct> {
                                   setState(() {
                                     dropdownConditionValue = newConditionValue;
                                     productCondition = newConditionValue;
+                                    print("product condition: "+ productCondition);
                                   });
                                 },
                                 items: listCondition.map((valueItem) {
@@ -384,7 +389,7 @@ class _AddProductState extends State<AddProduct> {
                                       "",
                                       ctrlName.text,
                                       ctrlBrand.text,
-                                      _dateTime.toString(),
+                                      (myFormat.format(_dateTime)).toString(),
                                       productType,
                                       productCondition,
                                       ctrlDesc.text,

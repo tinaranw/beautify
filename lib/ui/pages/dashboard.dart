@@ -1,6 +1,8 @@
 part of 'pages.dart';
 
 class Dashboard extends StatefulWidget {
+  final Users users;
+  Dashboard({this.users});
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -8,6 +10,9 @@ class Dashboard extends StatefulWidget {
 String date = DateFormat.yMMMd().format(DateTime.now());
 
 class _DashboardState extends State<Dashboard> {
+  CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("users");
+  String currentUsername, currentBalance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +51,21 @@ class _DashboardState extends State<Dashboard> {
                         SizedBox(height: 10),
                         SizedBox(
                           width: double.infinity,
-                          child: Text(
-                            'Welcome, Tinara Nathania',
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                                color: Color(0xFF8ad5aa),
-                                fontFamily: 'Nexa'),
+                          child: FutureBuilder(
+                            future: _username(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              return Text(
+                                'Welcome, $currentUsername',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
+                                    color: Color(0xFF8ad5aa),
+                                    fontFamily: 'Nexa'),
+                              );
+                            },
                           ),
                         ),
                         SizedBox(height: 10),
@@ -78,11 +89,19 @@ class _DashboardState extends State<Dashboard> {
                                             )),
                                       ),
                                       Expanded(
-                                        child: Text("\$450.50",
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                            )),
+                                        child: FutureBuilder(
+                                          future: _balance(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                            return Text(
+                                                ActivityServices.toIDR(
+                                                    currentBalance),
+                                                textAlign: TextAlign.right,
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                ));
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -102,7 +121,7 @@ class _DashboardState extends State<Dashboard> {
                                       )),
                                       Expanded(
                                           child: IconButton(
-                                       onPressed: () {
+                                        onPressed: () {
                                           Navigator.pushNamed(
                                               context, Statistics.routeName);
                                         },
@@ -296,5 +315,34 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
     );
+  }
+
+  _username() async {
+    // ignore: await_only_futures
+    final myuser = await FirebaseAuth.instance.currentUser.uid;
+    if (myuser != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(myuser)
+          .get()
+          .then((ds) {
+        currentUsername = ds.data()['name'];
+        print("username" + currentUsername);
+      });
+    }
+  }
+
+  _balance() async {
+    // ignore: await_only_futures
+    final myuser = await FirebaseAuth.instance.currentUser.uid;
+    if (myuser != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(myuser)
+          .get()
+          .then((ds) {
+        currentBalance = ds.data()['balance'];
+      });
+    }
   }
 }

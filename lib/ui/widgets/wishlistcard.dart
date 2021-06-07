@@ -1,19 +1,21 @@
 part of 'widgets.dart';
 
-class ProductCardBudget extends StatefulWidget {
-  final Products products;
-  ProductCardBudget({this.products});
+class WishlistCard extends StatefulWidget {
+  final Wishlists wishlists;
+  WishlistCard({this.wishlists});
 
   @override
-  _ProductCardBudgetState createState() => _ProductCardBudgetState();
+  _WishlistCardtState createState() => _WishlistCardtState();
 }
 
-class _ProductCardBudgetState extends State<ProductCardBudget> {
+class _WishlistCardtState extends State<WishlistCard> {
   bool addToCart = false;
+  double total = 0;
+  double totalNow = 0;
   @override
   Widget build(BuildContext context) {
-    Products product = widget.products;
-    if (product == null) {
+    Wishlists wishlist = widget.wishlists;
+    if (wishlist == null) {
       return Container();
     } else {
       return Card(
@@ -25,16 +27,19 @@ class _ProductCardBudgetState extends State<ProductCardBudget> {
           child: ListTile(
             leading: CircleAvatar(
               radius: 24.0,
-              backgroundImage: NetworkImage(product.productImage),
+              backgroundImage: NetworkImage(wishlist.wishlistImage),
             ),
             title: Text(
-              product.productName,
+              wishlist.wishlistName,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               maxLines: 1,
               softWrap: true,
             ),
             subtitle: Text(
-              ActivityServices.toIDR(product.productPrice),
+              ActivityServices.toIDR(wishlist.wishlistPrice) +
+                  " (" +
+                  (wishlist.wishlistTotal) +
+                  ")",
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
               maxLines: 1,
               softWrap: true,
@@ -45,15 +50,27 @@ class _ProductCardBudgetState extends State<ProductCardBudget> {
               children: [
                 IconButton(
                   icon: Icon(
-                  addToCart == false ? CupertinoIcons.rectangle: CupertinoIcons.checkmark_rectangle,
+                    addToCart == false
+                        ? CupertinoIcons.rectangle
+                        : CupertinoIcons.checkmark_rectangle,
                     color: Colors.orangeAccent,
                   ),
                   onPressed: () {
                     setState(() {
-                      if(!addToCart){
+                      if (!addToCart) {
                         addToCart = true;
+                        print("add before" + (total).toString());
+                        totalNow = WishlistServices.addToCart(
+                            total, double.parse(wishlist.wishlistPrice));
+                        total = total + totalNow;
+                        print("add after" + (total).toString());
                       } else {
                         addToCart = false;
+                        print("remove before" + (total).toString());
+                        total = WishlistServices.removeFromCart(
+                            total, double.parse(wishlist.wishlistPrice));
+                            
+                        print("remove after" + (total).toString());
                       }
                     });
                   },
