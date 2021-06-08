@@ -7,7 +7,6 @@ class AddWishlist extends StatefulWidget {
 }
 
 class _AddWishlistState extends State<AddWishlist> {
-  DateTime _dateTime;
   bool isLoading = false;
   String wishlistType;
 

@@ -12,7 +12,8 @@ class WishlistServices {
   static UploadTask uploadTask;
   static String imgUrl;
 
-  static Future<bool> addWishlist(Wishlists wishlists, PickedFile imgFile) async {
+  static Future<bool> addWishlist(
+      Wishlists wishlists, PickedFile imgFile) async {
     await Firebase.initializeApp();
     String dateNow = ActivityServices.dateNow();
     wishlistDocument = await wishlistCollection.add({
@@ -68,17 +69,45 @@ class WishlistServices {
     return hsl;
   }
 
-  static double addToCart(double total, double price){
+  static double addToCart(double total, double price) {
     total = total + price;
     return total;
-
   }
 
-  static double removeFromCart(double total, double price){
+  static double removeFromCart(double total, double price) {
     total = total - price;
     return total;
-
   }
 
-  
+  static Future<String> updateCart(String id, String check) async {
+    await Firebase.initializeApp();
+    String msg = "";
+
+    await wishlistCollection.doc(id).update({
+      'wishlistChecked': check,
+    }).then((value) {
+      msg = "success";
+    }).catchError((onError) {
+      msg = onError;
+    });
+
+    return msg;
+  }
+
+  static Future<int> getTotalExpense(String uid) async {
+    int totalExpense = 0;
+    await wishlistCollection
+        .where('addBy', isEqualTo: uid)
+        .where('wishlistChecked', isEqualTo: '1')
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        totalExpense = totalExpense + int.parse(result.data()['wishlistPrice']);
+       
+      });
+       
+    });
+    print("OMAE WA MOU SHINDEIRU: " + totalExpense.toString());
+    return totalExpense;
+  }
 }

@@ -99,7 +99,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
       querySnapshot.docs.forEach((result) {
         listExpiredProducts =
             listExpiredProducts + ", " + result.get("productName");
-        // print(listExpiredProducts);
+        print(listExpiredProducts);
       });
     });
     return listExpiredProducts;

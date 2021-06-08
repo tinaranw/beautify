@@ -14,8 +14,22 @@ class _WishlistState extends State<Wishlist> {
       FirebaseFirestore.instance.collection("wishlist");
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
-  String currentBudget, totalExpense;
+  String currentBudget;
+  int totalExpense = 0;
+  int total = 0;
 
+  void getTotal() {
+    print("checktotal");
+    WishlistServices.getTotalExpense(uid).then((value) {
+      setState(() {
+        print(value);
+        totalExpense = value;
+        print("totalExpense: " + (totalExpense).toString());
+         
+      });
+    });
+   
+  }
 
   Widget buildBody() {
     return Container(
@@ -103,12 +117,13 @@ class _WishlistState extends State<Wishlist> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom:20),
+                        padding: const EdgeInsets.only(bottom: 20),
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
                               onPressed: () {
-                                 Navigator.pushReplacementNamed(context, AddWishlist.routeName);
+                                Navigator.pushReplacementNamed(
+                                    context, AddWishlist.routeName);
                               },
                               icon: Icon(Icons.add),
                               label: Text("Add to cart"),
@@ -136,7 +151,7 @@ class _WishlistState extends State<Wishlist> {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               return Text(
-                                'IDR'+ '$currentBudget',
+                                'IDR ' + '$currentBudget',
                                 textAlign: TextAlign.left,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -159,21 +174,32 @@ class _WishlistState extends State<Wishlist> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Total',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Nexa',
-                                color: Color(0x59636263)),
+                          Expanded(
+                            child: Text(
+                              'Total',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Nexa',
+                                  color: Color(0x59636263)),
+                            ),
                           ),
-                          Text(
-                            '\$166.50',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Nexa',
-                                color: Color(0xFF636263)),
+                          Expanded(
+                            child: Text(
+                              'IDR ' + ('$totalExpense').toString(),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Nexa',
+                                  color: Color(0xFF636263)),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.refresh),
+                            color: Color(0xFF636263),
+                            onPressed: () {
+                              getTotal();
+                            },
                           ),
                         ],
                       )

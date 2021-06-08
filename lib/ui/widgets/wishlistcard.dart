@@ -9,7 +9,7 @@ class WishlistCard extends StatefulWidget {
 }
 
 class _WishlistCardtState extends State<WishlistCard> {
-  bool addToCart = false;
+  String addToCart = '0';
   double total = 0;
   double totalNow = 0;
   @override
@@ -36,10 +36,7 @@ class _WishlistCardtState extends State<WishlistCard> {
               softWrap: true,
             ),
             subtitle: Text(
-              wishlist.wishlistPrice +
-                  " (" +
-                  (wishlist.wishlistTotal) +
-                  ")",
+              wishlist.wishlistPrice + " (" + (wishlist.wishlistTotal) + ")",
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
               maxLines: 1,
               softWrap: true,
@@ -50,28 +47,20 @@ class _WishlistCardtState extends State<WishlistCard> {
               children: [
                 IconButton(
                   icon: Icon(
-                    addToCart == false
+                    wishlist.wishlistChecked == '0'
                         ? CupertinoIcons.rectangle
                         : CupertinoIcons.checkmark_rectangle,
                     color: Colors.orangeAccent,
                   ),
                   onPressed: () {
                     setState(() {
-                      if (!addToCart) {
-                        addToCart = true;
-                        print("add before" + (total).toString());
-                        totalNow = WishlistServices.addToCart(
-                            total, double.parse(wishlist.wishlistPrice));
-                        total = total + totalNow;
-                        print("add after" + (total).toString());
+                      if (wishlist.wishlistChecked == '0') {
+                        addToCart = '1';
                       } else {
-                        addToCart = false;
-                        print("remove before" + (total).toString());
-                        total = WishlistServices.removeFromCart(
-                            total, double.parse(wishlist.wishlistPrice));
-                            
-                        print("remove after" + (total).toString());
+                        addToCart = '0';
                       }
+                      WishlistServices.updateCart(
+                          wishlist.wishlistId, addToCart);
                     });
                   },
                 ),
