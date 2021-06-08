@@ -86,7 +86,7 @@ class _EditBalanceState extends State<EditBalance> {
                                     isLoading = true;
                                   });
                                   await AuthServices.updateBalance(myuser, ctrlBalance.text).then((value) {
-                                    if (value == true) {
+                                    if (value) {
                                       setState(() {
                                         isLoading = false;
                                       });
@@ -123,6 +123,6 @@ class _EditBalanceState extends State<EditBalance> {
                 ),
                 isLoading == true ? ActivityServices.loadings() : Container()
               ],
-            )));
+            )),);
   }
 }

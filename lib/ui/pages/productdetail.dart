@@ -312,7 +312,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                     }
                                     switch (snapshot.connectionState) {
                                       case ConnectionState.waiting:
-                                        return ActivityServices.loadings();
+                                      return ActivityServices.loadings();
                                       default:
                                         return new Text(product.productDesc,
                                             textAlign: TextAlign.justify,

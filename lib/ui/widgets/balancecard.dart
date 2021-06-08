@@ -69,13 +69,6 @@ class _BalanceCardState extends State<BalanceCard> {
                     },
                     icon: Icon(Icons.edit),
                   )),
-                  Expanded(
-                      child: IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, Statistics.routeName);
-                    },
-                    icon: Icon(Icons.call_made),
-                  )),
                 ],
               ),
             ),

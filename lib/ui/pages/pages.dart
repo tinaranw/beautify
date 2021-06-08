@@ -12,6 +12,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'package:beautify/managers/LocalNotifyManager.dart';
+import 'package:fl_chart/fl_chart.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/gestures.dart';
 
 import 'package:intl/intl.dart';
 
@@ -32,3 +35,4 @@ part 'statistics.dart';
 part 'calendar.dart';
 part 'editproduct.dart';
 part 'editbalance.dart';
+part 'editprofile.dart';

@@ -84,18 +84,32 @@ class AuthServices {
     return true;
   }
 
-  static Future<String> updateBalance(String uid, String balance) async {
+  static Future<bool> editProfile(String uid, String name, String phone) async {
     await Firebase.initializeApp();
-    String msg = "";
+
+    await userCollection.doc(uid).update({
+      'name': name,
+      'phone': phone,
+    }).then((value) {
+     print("Profile Update Successful");
+    }).catchError((onError) {
+     print("Failed to Update Profile");
+    });
+
+    return true;
+  }
+
+  static Future<bool> updateBalance(String uid, String balance) async {
+    await Firebase.initializeApp();
 
     await userCollection.doc(uid).update({
       'balance': balance,
     }).then((value) {
-      msg = "success";
+     print("Update Successful");
     }).catchError((onError) {
-      msg = onError;
+     print("Failed to Update");
     });
 
-    return msg;
+    return true;
   }
 }

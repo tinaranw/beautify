@@ -122,7 +122,7 @@ class _EditProductState extends State<EditProduct> {
     ctrlPrice.text = product.productPrice;
     dropdownTypeValue = product.productType;
     dropdownConditionValue = product.productCondition;
-    _dateTime = DateTime.parse(product.productDate);
+    _dateTime = DateFormat('d-MM-yyyy').parse(product.productDate);
 
     return Scaffold(
         appBar: AppBar(

@@ -8,7 +8,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
- 
   bool isLoading = false;
   String msg = "Fail";
   CollectionReference userCollection =
@@ -99,10 +98,12 @@ class _ProfileState extends State<Profile> {
                                 Container(
                                   padding: EdgeInsets.only(top: 10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 24.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 24.0),
                                         child: Text(
                                           'Settings',
                                           textAlign: TextAlign.left,
@@ -131,6 +132,30 @@ class _ProfileState extends State<Profile> {
                 width: double.infinity,
                 child:
                     Image.asset("assets/images/profileimage.png", height: 130),
+              ),
+            ),
+            Positioned(
+              top: 200,
+              right: 100,
+              child: Container(
+                height: 47,
+                width: 47,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: 4,
+                    color: Colors.white,
+                  ),
+                   color: Color(0xFFB5E4AE),
+                ),
+                child: IconButton(
+                  onPressed: (){
+                     Navigator.pushReplacementNamed(
+                                          context, EditProfile.routeName);
+                  },
+                  icon: Icon(Icons.edit),
+                  color: Colors.white,
+                ),
               ),
             ),
             Container(
@@ -172,6 +197,7 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
+      
     );
   }
 
