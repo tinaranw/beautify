@@ -116,13 +116,9 @@ class _EditProductState extends State<EditProduct> {
   @override
   Widget build(BuildContext context) {
     Products product = ModalRoute.of(context).settings.arguments;
-    ctrlName.text = product.productName;
-    ctrlBrand.text = product.productBrand;
-    ctrlDesc.text = product.productDesc;
-    ctrlPrice.text = product.productPrice;
-    dropdownTypeValue = product.productType;
-    dropdownConditionValue = product.productCondition;
-    _dateTime = DateFormat('d-MM-yyyy').parse(product.productDate);
+    // dropdownTypeValue = product.productType;
+    // dropdownConditionValue = product.productCondition;
+    // _dateTime = DateFormat('d-MM-yyyy').parse(product.productDate);
 
     return Scaffold(
         appBar: AppBar(
@@ -148,9 +144,9 @@ class _EditProductState extends State<EditProduct> {
                             controller: ctrlName,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
-                              labelText: "Product Name",
-                              border: OutlineInputBorder(),
-                            ),
+                                labelText: "Product Name",
+                                border: OutlineInputBorder(),
+                                hintText: product.productName),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -166,11 +162,11 @@ class _EditProductState extends State<EditProduct> {
                           ),
                           TextFormField(
                             controller: ctrlBrand,
-                            keyboardType: TextInputType.name,
+                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
-                              labelText: "Product Brand",
-                              border: OutlineInputBorder(),
-                            ),
+                                labelText: "Product Brand",
+                                border: OutlineInputBorder(),
+                                hintText: product.productBrand),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -316,9 +312,9 @@ class _EditProductState extends State<EditProduct> {
                             keyboardType: TextInputType.text,
                             maxLines: 3,
                             decoration: InputDecoration(
-                              labelText: "Product Description",
-                              border: OutlineInputBorder(),
-                            ),
+                                labelText: "Product Description",
+                                border: OutlineInputBorder(),
+                                hintText: product.productDesc),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -336,9 +332,9 @@ class _EditProductState extends State<EditProduct> {
                             controller: ctrlPrice,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                              labelText: "Product Price",
-                              border: OutlineInputBorder(),
-                            ),
+                                labelText: "Product Price",
+                                border: OutlineInputBorder(),
+                                hintText: product.productPrice),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -352,42 +348,23 @@ class _EditProductState extends State<EditProduct> {
                           SizedBox(
                             height: 24,
                           ),
-                          product.productImage == null
-                              ? imageFile == null
-                                  ? Row(
-                                      children: [
-                                        ElevatedButton.icon(
-                                            onPressed: () {
-                                              showFileDialog(context);
-                                            },
-                                            icon: Icon(Icons.photo_camera),
-                                            label: Text("Take Photo"),
-                                            style: ElevatedButton.styleFrom(
-                                                primary: Color(0xFFC8A6CB))),
-                                        SizedBox(
-                                          width: 16,
-                                        ),
-                                        Text("File not found.")
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        ElevatedButton.icon(
-                                            onPressed: () {
-                                              showFileDialog(context);
-                                            },
-                                            icon: Icon(Icons.photo_camera),
-                                            label: Text("Retake Photo")),
-                                        SizedBox(
-                                          width: 16,
-                                        ),
-                                        Semantics(
-                                            child: Image.file(
-                                          File(imageFile.path),
-                                          width: 100,
-                                        ))
-                                      ],
-                                    )
+                          imageFile == null
+                              ? Row(
+                                  children: [
+                                    ElevatedButton.icon(
+                                        onPressed: () {
+                                          showFileDialog(context);
+                                        },
+                                        icon: Icon(Icons.photo_camera),
+                                        label: Text("Take Photo"),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Color(0xFFC8A6CB))),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    Text("File not found.")
+                                  ],
+                                )
                               : Row(
                                   children: [
                                     ElevatedButton.icon(
@@ -399,16 +376,11 @@ class _EditProductState extends State<EditProduct> {
                                     SizedBox(
                                       width: 16,
                                     ),
-                                    Container(
-                                      height: 100.0,
+                                    Semantics(
+                                        child: Image.file(
+                                      File(imageFile.path),
                                       width: 100,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image: NetworkImage(
-                                                product.productImage)),
-                                      ),
-                                    )
+                                    ))
                                   ],
                                 ),
                           SizedBox(
@@ -418,50 +390,53 @@ class _EditProductState extends State<EditProduct> {
                             width: double.infinity, // <-- match_parent
                             child: ElevatedButton.icon(
                               onPressed: () async {
-                                if (_formKey.currentState.validate() &&
-                                    imageFile != null) {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  Products products = Products(
-                                      "",
-                                      ctrlName.text,
-                                      ctrlBrand.text,
-                                      (myFormat.format(_dateTime)).toString(),
-                                      productType,
-                                      productCondition,
-                                      ctrlDesc.text,
-                                      ctrlPrice.text,
-                                      "",
-                                      FirebaseAuth.instance.currentUser.uid,
-                                      "",
-                                      "");
-                                  await ProductServices.addProduct(
-                                          products, imageFile)
-                                      .then((value) {
-                                    if (value == true) {
-                                      ActivityServices.showToast(
-                                          "Edit product successful",
-                                          Colors.green);
-                                      clearForm();
-                                      Navigator.pushReplacementNamed(
-                                          context, MainMenu.routeName);
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                    } else {
-                                      ActivityServices.showToast(
-                                          "Failed to edit product!",
+                                // if (_formKey.currentState.validate() &&
+                                //     imageFile != null) {
+                                //   setState(() {
+                                //     isLoading = true;
+                                //   });
+                                //   Products products = Products(
+                                //       "",
+                                //       ctrlName.text,
+                                //       ctrlBrand.text,
+                                //       (myFormat.format(_dateTime)).toString(),
+                                //       productType,
+                                //       productCondition,
+                                //       ctrlDesc.text,
+                                //       ctrlPrice.text,
+                                //       "",
+                                //       FirebaseAuth.instance.currentUser.uid,
+                                //       "",
+                                //       "");
+                                //   await ProductServices.editProduct(
+                                //           products, imageFile)
+                                //       .then((value) {
+                                //     if (value == true) {
+                                //       ActivityServices.showToast(
+                                //           "Edit product successful",
+                                //           Colors.green);
+                                //       clearForm();
+                                //       Navigator.pushReplacementNamed(
+                                //           context, MainMenu.routeName);
+                                //       setState(() {
+                                //         isLoading = false;
+                                //       });
+                                //     } else {
+                                //       ActivityServices.showToast(
+                                //           "Failed to edit product!",
+                                //           Colors.red);
+                                //     }
+                                //   });
+                                // } else {
+                                //   ActivityServices.showToast(
+                                //       "PLease fill in all fields!", Colors.red);
+                                // }
+                                 ActivityServices.showToast(
+                                          "Mohon bersabar, ngab- Ini cobaan bagi saya :)",
                                           Colors.red);
-                                    }
-                                  });
-                                } else {
-                                  ActivityServices.showToast(
-                                      "PLease fill in all fields!", Colors.red);
-                                }
                               },
                               icon: Icon(Icons.save),
-                              label: Text("Save Product"),
+                              label: Text("Edit Product"),
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xFFFF9382),
                                   elevation: 0,

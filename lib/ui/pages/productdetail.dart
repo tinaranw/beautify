@@ -25,7 +25,16 @@ class _ProductDetailState extends State<ProductDetail> {
           height: double.infinity,
           color: Color(0xFF99E4F9),
           child: Stack(
-            children: [
+            children: [Container(
+                    height: 310.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(product.productImage)),
+                      shape: BoxShape.rectangle,
+                    ),
+                  ),
               Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
@@ -40,6 +49,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               topRight: Radius.circular(30))),
                       child: ListView(
                         children: [
+                         
                           Container(
                             padding: EdgeInsets.all(20),
                             child: Column(
@@ -169,7 +179,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                             return ActivityServices.loadings();
                                           default:
                                             return new Text(
-                                                product.productPrice,
+                                                'IDR ' + product.productPrice,
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontFamily: 'Nexa',
@@ -312,7 +322,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                     }
                                     switch (snapshot.connectionState) {
                                       case ConnectionState.waiting:
-                                      return ActivityServices.loadings();
+                                        return ActivityServices.loadings();
                                       default:
                                         return new Text(product.productDesc,
                                             textAlign: TextAlign.justify,
@@ -331,27 +341,22 @@ class _ProductDetailState extends State<ProductDetail> {
                       ),
                     )),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 80, right: 30),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                    height: 200.0,
-                    width: 200.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(product.productImage)),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              )
+              
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () async {
+            bool result =
+                await ProductServices.deleteProduct(product.productId);
+            if (result) {
+                 Navigator.pushReplacementNamed(context, MainMenu.routeName);
+              ActivityServices.showToast("Delete Data Success", Colors.green);
+
+            } else {
+              ActivityServices.showToast("Delete Data Success", Colors.red);
+            }
+          },
           child: new Icon(Icons.delete, color: Colors.white),
           backgroundColor: Color(0xFFDE5E52),
         ));

@@ -69,5 +69,26 @@ class ProductServices {
     return hsl;
   }
 
-  
+  static Future<bool> editProduct(Products products, PickedFile imgFile) async {
+    await Firebase.initializeApp();
+    String dateNow = ActivityServices.dateNow();
+    productDocument = await productCollection.doc(products.productId).update({
+      'productName': products.productName,
+      'productBrand': products.productBrand,
+      'productDate': products.productDate,
+      'productType': products.productType,
+      'productCondition': products.productCondition,
+      'productDesc': products.productDesc,
+      'productPrice': products.productPrice,
+      'productImage': products.productImage,
+      'updatedAt': dateNow,
+    }).then((value) {
+     print("Update Successful");
+     
+    }).catchError((onError) {
+     print("Failed to Update");
+    });
+
+    return true;
+  }
 }

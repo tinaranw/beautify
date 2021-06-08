@@ -13,7 +13,7 @@ class _ProfileState extends State<Profile> {
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
   String currentUsername, currentEmail, currentBalance;
-
+String myuser = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,7 +203,6 @@ class _ProfileState extends State<Profile> {
 
   _username() async {
     // ignore: await_only_futures
-    final myuser = await FirebaseAuth.instance.currentUser.uid;
     if (myuser != null) {
       await FirebaseFirestore.instance
           .collection('users')
@@ -218,7 +217,6 @@ class _ProfileState extends State<Profile> {
 
   _email() async {
     // ignore: await_only_futures
-    final myuser = await FirebaseAuth.instance.currentUser.uid;
     if (myuser != null) {
       await FirebaseFirestore.instance
           .collection('users')
